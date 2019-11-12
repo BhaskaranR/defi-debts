@@ -1,6 +1,5 @@
-# EOSIO web-based integrated development environment (IDE) for decentralized applications ![EOSIO Alpha](https://img.shields.io/badge/EOSIO-Alpha-blue.svg)
+the contract for this repo is forked from [dBonds](https://github.com/thedeposbank/dbonds) .
 
-[![Software License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](./LICENSE)
 
 This repository enables developers to instantiate a browser based IDE and runs the required EOSIO blockchain components (nodeos, keosd, cleos) in a personal cloud instance. All custom code created by the developer is securely managed on the developer's personal GitHub account. Zero installation is required on the user's machine. User's can simply point their browser to the provided URL below and begin compiling the provided example smart contract (C++) and the associated front-end decentralized application (EOSJS), deploy the application on the blockchain, and experience the application in under a few minutes.  
 
@@ -126,15 +125,3 @@ FC Exception encountered while processing chain.get_table_rows
 ## Contributing
 
 [Contributing Guide](./CONTRIBUTING.md)
-
-[Code of Conduct](./CONTRIBUTING.md#conduct)
-
-## License
-
-[MIT](./LICENSE)
-
-## Important
-
-See [LICENSE](LICENSE) for copyright and license terms.
-
-All repositories and other materials are provided subject to the terms of this [IMPORTANT](important.md) notice and you must familiarize yourself with its terms.  The notice contains important information, limitations and restrictions relating to our software, publications, trademarks, third-party resources, and forward-looking statements.  By accessing any of our repositories and other materials, you accept and agree to the terms of the notice.
