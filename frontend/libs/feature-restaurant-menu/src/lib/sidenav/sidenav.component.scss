@@ -1,0 +1,26 @@
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav {
+    width: 200px;
+    top: 50px !important;
+}
+
+.sidenav .mat-toolbar {
+    background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.main-content {
+    min-height: calc(100vh - 100px);
+}
+
+p {
+    font-size: 0.825rem !important;
+}

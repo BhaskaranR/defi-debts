@@ -1,0 +1,132 @@
+$margin-promotion-sections: 15px;
+$border-color: rgba(0, 0, 0, .09);
+
+.homepage-promo {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    h2 {
+        font-size: 25px;
+        font-weight: 400;
+        margin: 0 0 16px 0;
+        padding: 0;
+    }
+    p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 28px;
+        margin: 0 0 24px 0;
+        padding: 0;
+    }
+    .homepage-row {
+        display: flex;
+        margin: $margin-promotion-sections 0;
+    }
+}
+
+.header-section {
+    text-align: left;
+    padding-top: $margin-promotion-sections;
+}
+
+.header-headline {
+    h1 {
+        font-size: 40px;
+        font-weight: 300;
+        line-height: 56px;
+        margin: 15px 0px;
+    }
+    h2 {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 28px;
+        margin: 15px 0 25px 0;
+    }
+}
+
+.mat-card{
+    padding: 0px!important;
+}
+
+
+.pricing-card {
+    min-width: 150px;
+  }
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.col {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+
+.col:last-child {
+    margin-right: 0;
+  }
+  
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.option-img {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  
+  [dir='rtl'] .option-img {
+    margin-right: 0;
+    margin-left: 8px;
+  }
+
+.container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 80px 80px 80px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+.secondary-text {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .grid-container {
+    margin: 20px;
+  }
+  
+  .dashboard-card {
+    margin: 20px;
+  }
+
+
+  .add-button {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+  }
+  
+  .remove-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  .dashboard-card-content {
+    text-align: center;
+  }
+  
+  
+// .stepper {
+//     padding: 20px;
+//     width: 50%;
+// }

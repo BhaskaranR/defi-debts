@@ -1,0 +1,56 @@
+<header class="header-background">
+    <div class="header-section">
+        <div class="header-headline">
+            <h1 class="mat-h1">Menu Management Home</h1>
+            <h2> Create menu books, add dishes and list them</h2>
+        </div>
+    </div>
+</header>
+
+<div class="homepage-promo">
+    <div class="homepage-row">
+        <div class="component-list-category">
+            <a class="component-list-item" [routerLink]="'newsection'">
+                <mat-card>
+                    <mat-card-header class="component-list-card-header">
+                        <mat-card-title class="component-list-card-title">Add section</mat-card-title>
+                        <div class="component-list-icon-spacer"></div>
+                        <div class="component-list-item-icon">
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content class="component-list-card-summary">
+                        Add menu sections to your menu book
+                    </mat-card-content>
+                </mat-card>
+            </a>
+            <a class="component-list-item" [routerLink]="'newmenu'">
+                <mat-card>
+                    <mat-card-header class="component-list-card-header">
+                        <mat-card-title class="component-list-card-title">Add dish</mat-card-title>
+                        <div class="component-list-icon-spacer"></div>
+                        <div class="component-list-item-icon">
+                        </div>
+                    </mat-card-header>
+
+                    <mat-card-content class="component-list-card-summary">
+                        Add your dishes to the menu book
+                    </mat-card-content>
+                </mat-card>
+            </a>
+            <a class="component-list-item" [routerLink]="'newlisting'">
+                <mat-card>
+                    <mat-card-header class="component-list-card-header">
+                        <mat-card-title class="component-list-card-title">Add listing</mat-card-title>
+                        <div class="component-list-icon-spacer"></div>
+                        <div class="component-list-item-icon">
+                        </div>
+                    </mat-card-header>
+                    <mat-card-content class="component-list-card-summary">
+                        list your dishes (standard, combo and time bound dynamic deals)
+                    </mat-card-content>
+                </mat-card>
+            </a>
+        </div>
+
+    </div>
+</div>

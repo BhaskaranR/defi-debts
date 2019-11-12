@@ -1,0 +1,42 @@
+{
+    "npmScope": "dex",
+    "implicitDependencies": {
+        "angular.json": "*",
+        "package.json": "*",
+        "tsconfig.json": "*",
+        "tslint.json": "*",
+        "nx.json": "*"
+    },
+    "projects": {
+        "web-dex": {
+            "tags": []
+        },
+        "web-dex-e2e": {
+            "tags": []
+        },
+        "feature-order": {
+            "tags": []
+        },
+        "ui": {
+            "tags": []
+        },
+        "feature-home": {
+            "tags": []
+        },
+        "feature-orders": {
+            "tags": []
+        },
+        "feature-dashboard": {
+            "tags": []
+        },
+        "feature-menu": {
+            "tags": []
+        },
+        "feature-restaurant": {
+            "tags": []
+        },
+        "feature-navigation-bar": {
+            "tags": []
+        }
+    }
+}

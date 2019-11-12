@@ -1,0 +1,111 @@
+$margin-promotion-sections: 60px;
+$margin-promotion-sections-small: 15px;
+$small-breakpoint-width: 720px;
+.header-background {
+    overflow: hidden;
+}
+
+.header-section {
+    text-align: center;
+    padding-top: $margin-promotion-sections;
+}
+
+.header-headline {
+    h1 {
+        font-size: 56px;
+        font-weight: 300;
+        line-height: 56px;
+        margin: 15px 5px;
+    }
+    h2 {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 28px;
+        margin: 15px 0 25px 0;
+    }
+}
+
+.header-start,
+.homepage-bottom-start {
+    text-align: center;
+    margin: $margin-promotion-sections 0;
+}
+
+.homepage-promo {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    h2 {
+        font-size: 25px;
+        font-weight: 400;
+        margin: 0 0 16px 0;
+        padding: 0;
+    }
+    p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 28px;
+        margin: 0 0 24px 0;
+        padding: 0;
+    }
+}
+
+.homepage-row {
+    display: flex;
+    margin: $margin-promotion-sections 0;
+}
+
+.component-list-category {
+    margin: 20px;
+    @media (max-width: $small-breakpoint-width) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+}
+
+.component-list-item {
+    display: inline-block;
+    margin: 20px;
+    vertical-align: top;
+    width: 260px;
+}
+
+.component-list-icon-spacer {
+    flex-grow: 1;
+}
+
+.component-list-card-title {
+    margin: 0 0 0 -8px;
+}
+
+.component-list-card-header {
+    align-items: center;
+}
+
+.component-list-card-summary {
+    min-height: 2.4em;
+    margin-top: 20px;
+}
+
+.component-list-item-icon {
+    margin: 0 0 0 10px;
+    width: 40px;
+    height: 40px;
+    align-self: flex-end;
+    flex-grow: 0;
+}
+
+@media (max-width: 720px) {
+    .header-section {
+        padding-top: $margin-promotion-sections-small;
+    }
+    .header-start,
+    .homepage-bottom-start {
+        margin: $margin-promotion-sections-small 0;
+    }
+    .homepage-row {
+        margin: $margin-promotion-sections-small 0;
+    }
+}

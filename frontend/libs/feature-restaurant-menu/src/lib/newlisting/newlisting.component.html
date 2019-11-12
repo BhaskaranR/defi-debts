@@ -1,0 +1,249 @@
+<mat-toolbar class="mat-elevation-z0">
+    Create your listing items
+</mat-toolbar>
+<mat-divider></mat-divider>
+<div *ngIf="!isReady; else main">
+    <mat-spinner style="margin:30px auto 30px auto;" [diameter]="25" mode="indeterminate"></mat-spinner>
+</div>
+
+<ng-template #main>
+    <form #pForm [formGroup]="pricingForm" (ngSubmit)="onSubmit(pForm)">
+        <mat-vertical-stepper class="stepper" #stepper formArrayName="formArray" [linear]="!isNonLinear">
+            <mat-step formGroupName="0" required [stepControl]="formArray?.get([0])">
+                <ng-template matStepLabel>Menu book details</ng-template>
+                <mat-card class="pricing-card mat-card-flat">
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Select section</mat-label>
+                                    <mat-select [(value)]="selectedSection" formControlName="section"
+                                        (selectionChange)="onSectionChange($event,stepper)">
+                                        <mat-option *ngFor="let item of sections" [value]="item">
+                                            {{ item.section_name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-step>
+
+            <mat-step formGroupName="1" required [stepControl]="formArray?.get([1])">
+                <ng-template matStepLabel>Select a menu item</ng-template>
+                <mat-card class="pricing-card mat-card-flat">
+                    <mat-card-content>
+                        <mat-action-list dense class="full-width" *ngIf="selectedItems?.length > 0">
+                            <button mat-list-item *ngFor="let item of selectedItems"
+                                (click)="listItemSelected(item, stepper)">
+                                <h4 mat-line>{{item.item_name}}</h4>
+                                <p mat-line class="secondary-text"> {{item.description}} </p>
+                            </button>
+                        </mat-action-list>
+                        <p *ngIf="selectedItems?.length == 0">There is no dishes created under current section</p>
+                    </mat-card-content>
+                </mat-card>
+            </mat-step>
+
+            <mat-step formGroupName="2" required [stepControl]="formArray?.get([2])">
+                <ng-template matStepLabel>{{priceHeader}}</ng-template>
+                <mat-card class="pricing-card mat-card-flat">
+                    <mat-card-content>
+                        <!-- <div class="row">
+                            <div class="col">
+                                <mat-button-toggle-group style="margin-bottom:20px;" appearance="legacy" (change)="priceTypeChanged($event)" name="pricingType" aria-label="Pricing Type">
+                                    <mat-button-toggle [checked]="true" value="1">Regular</mat-button-toggle>
+                                    <mat-button-toggle value="0">Dynamic</mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+                        </div> -->
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="list_price" type="number"
+                                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required
+                                        placeholder="List price">
+                                    <span matPrefix>$&nbsp;</span>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="pricetype === 0 ">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="min_price" type="number"
+                                        ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required
+                                        placeholder="Minimum price">
+                                    <span matPrefix>$&nbsp;</span>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="quantity" type="number" step="1" required
+                                        placeholder="Maximum Qty">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="pricetype === 0">
+                            <div class="col">
+                                <mat-label>Sliding rate</mat-label>
+                                <br>
+                                <mat-slider [min]="1" [max]="50" [tickInterval]="5" class="full-width"
+                                    [displayWith]="formatLabel" color="warn" class="full-width" thumbLabel
+                                    formControlName="sliding_rate" aria-label="Slider with thumb label"></mat-slider>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="pricetype === 0">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="start_date" [matDatepicker]="picker"
+                                        placeholder="Start date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+
+                                    <!-- <div class="ngx-material-timepicker__form-group"> -->
+                                    <input matInput formControlName="start_time" required placeholder="Start time"
+                                        [ngxTimepicker]="startTimePicker">
+                                    <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
+                                </mat-form-field>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="pricetype === 0">
+                            <div class="col ">
+                                <mat-form-field class="full-width">
+                                    <input matInput formControlName="end_date" [matDatepicker]="picker1"
+                                        placeholder="End date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col">
+                                <div class="ngx-material-timepicker__form-group">
+
+                                    <mat-form-field class="full-width">
+                                        <input matInput formControlName="end_time" required placeholder="End time"
+                                            [ngxTimepicker]="endTimePicker" >
+                                        <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-slide-toggle class="full-width" checked="true" labelPosition="after"
+                                    formControlName="isactive">
+                                    Active
+                                </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button [disabled]="pricingForm.get('formArray').controls[2].invalid"
+                            color="primary" (click)="$event.preventDefault(); stepper.next()">Next</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-step>
+
+            <mat-step formGroupName="3" required [stepControl]="formArray?.get([3])">
+                <ng-template matStepLabel>Add sides</ng-template>
+
+                <button mat-button type="button" (click)="createSideGroup()">+ Add side group</button>
+
+                <mat-card class="pricing-card mat-card-flat">
+                    <mat-card-content>
+                        <div class="row dashboard-card" formArrayName="side_groups"
+                            *ngFor="let grp of formArray?.get([3])?.get('side_groups')?.controls; let i = index;">
+                            <div class="col" [formGroupName]="i">
+                                <mat-card class="mat-card-flat">
+                                    <mat-card-header>
+                                        <button mat-icon-button class="remove-button" (click)="deleteItemGroup(i)">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div class="row">
+                                            <div class="col">
+                                                <mat-form-field class="half-width">
+                                                    <input matInput placeholder="Group name" required="true"
+                                                        formControlName="group">
+                                                    <mat-error *ngIf="grp.controls['group'].hasError('required')">
+                                                        Group name is <strong>required</strong>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <mat-form-field class="half-width">
+                                                    <mat-label>Max Selection</mat-label>
+                                                    <input matInput type="number" required="true"
+                                                        formControlName="max_selection">
+                                                    <mat-error
+                                                        *ngIf="grp.controls['max_selection'].hasError('required')">
+                                                        Max selection is <strong>required</strong>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button mat-button type="button" (click)="createItemSide(i)">+ Add
+                                                    side</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row dashboard-card" formArrayName="sides"
+                                            *ngFor="let side of grp.get('sides').controls; let j = index;">
+                                            <div class="row" [formGroupName]="j">
+                                                <div class="col">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput placeholder="name" required="true"
+                                                            formControlName="item_name">
+                                                        <mat-error
+                                                            *ngIf="side.controls['item_name'].hasError('required')">
+                                                            name is <strong>required</strong>
+                                                        </mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput formControlName="list_price" type="number"
+                                                            ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                            placeholder="List price">
+                                                        <span matPrefix>$&nbsp;</span>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col">
+                                                    <button mat-icon-button (click)="deleteItemSide(i,j)">
+                                                        <mat-icon>close</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" type="submit">Submit</button>
+                        <button type="button" mat-button (click)="resetForm()">Reset</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-step>
+        </mat-vertical-stepper>
+    </form>
+</ng-template>

@@ -1,0 +1,25 @@
+<mat-sidenav-container>
+    <mat-sidenav #drawer fixedInViewport="true" [fixedTopGap]="65" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)" style="width:240px">
+        <div>
+            <mat-nav-list>
+                <mat-list-item routerLink="newsection">
+                    <mat-icon mat-list-icon>book</mat-icon>
+                    <p mat-line> Sections</p>
+                </mat-list-item>
+                <mat-list-item routerLink="newmenu">
+                    <mat-icon mat-list-icon>restaurant_menu</mat-icon>
+                    <p mat-line> New menu</p>
+                </mat-list-item>
+                <mat-list-item routerLink="newlisting">
+                    <mat-icon mat-list-icon>attach_money </mat-icon>
+                    <p mat-line> Pricing </p>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

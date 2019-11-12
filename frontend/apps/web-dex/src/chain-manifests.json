@@ -1,0 +1,20 @@
+{
+    "spec_version": "0.0.7",
+    "manifests": [
+      {
+        "chainId": "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+        "manifest": {
+          "account": "tropical",
+          "domain": "http://localhost:8080",
+          "appmeta": "http://localhost:8080/app-metadata.json#2181e099fbfb2908a899136367b68d66810175c703ccfeb3c56540ddd96d9f1f",
+          "whitelist": [
+            {
+              "contract": "tropical",
+              "action": "like"
+            }
+          ]
+        }
+      }
+    ]
+  }
+  

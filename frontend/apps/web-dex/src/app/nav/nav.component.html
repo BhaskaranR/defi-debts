@@ -1,0 +1,62 @@
+<!-- TODO: figure out if the <nav> should go inside of a <header> element. -->
+<div flxlayout="row"
+     fxLayoutAlign="start center"
+     fxLayoutGap="15px"
+     fxLayoutGap.xs="0">
+    <div fxFlex="90px" fxFlex.sm="90px" fxFlex.xs="90px">
+        <a mat-button class="button" routerLink="/" aria-label="DEX">
+            <span>DEX</span>
+        </a>
+    </div>
+    <ng-container *ngIf="user != undefined && user != null">
+        <div  *ngFor="let key of sectionKeys">
+            <a mat-button class="button" [routerLink]="key" aria-label="DEX">{{sections[key].name}}</a>
+        </div>
+    </ng-container>
+    <div fxFlex="75%" 
+        fxFlex.sm="20%" 
+        fxFlex.xs="20%" 
+        fxFlexOrder="4" 
+        fxLayout="row" 
+        fxLayoutAlign="end center" 
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="0px">
+
+        <button mat-button color="accent" *ngIf="user !== null;else signin" [matMenuTriggerFor]="toolbarUserMenu">
+                {{accountName}}
+            </button>
+                <mat-menu #toolbarUserMenu="matMenu">
+                <button mat-menu-item (click)="viewAccount()">View Account</button>
+
+              <button mat-menu-item (click)="onLogoutClick()">
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+            <ng-template #signin>
+                <button mat-button mat-stroked-button color="accent" (click)="onLoginClick()">
+                    Sign in
+                </button>
+            </ng-template>
+    </div>
+</div>
+
+
+<!--    
+
+<div class="container" fxlayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxLayoutGap.xs="0" class="dex-home-nav">
+    <div fxFlex="20px" fxFlex.sm="20px" fxFlex.xs="20px" fxFlexOrder="1">
+        <mat-icon (click)="toggleSideNav()">menu</mat-icon>
+    </div>
+    <div fxFlex="200px" fxHide.sm="true" fxHide.xs="true" fxFlexOrder="2">
+        <a routerLink="/home"><img style="display:inline-block;width:120px;height:127px;margin-top:8px" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/76ab2e19585305.562dce0bcf645.png" alt=""></a>
+    </div>
+    <div fxFlex="65%" fxFlex.sm="70%" fxFlex.xs="70%" fxFlexOrder="3">
+
+    </div>
+    <div fxFlex="20%" fxFlex.sm="20%" fxFlex.xs="20%" fxFlexOrder="4" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <a routerLink="/profile" *ngIf="!scatter.logged">LOGIN</a>
+        <div *ngIf="scatter.logged">
+            <mat-icon [matMenuTriggerFor]="menu" style="margin-top:5px">person</mat-icon>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,17 @@
+{
+    "spec_version": "0.0.7",
+    "name": "demo",
+    "shortname": "demo",
+    "scope": "/",
+    "apphome": "/",
+    "icon": "icon.png#8b7c88882a217876ee4cfd6eaecba21f8083d7f37d757cb7ed3b768ba8590f09",
+    "description": "Simple Example",
+    "chains": [
+      {
+        "chainId": "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+        "chainName": "kylin",
+        "icon": "eosiologo.png#128321d1e1023f41c35b9d168f0af0090ffb4e1a5d84c275feb1aa8c7a2551da"
+      }
+    ]
+  }
+  

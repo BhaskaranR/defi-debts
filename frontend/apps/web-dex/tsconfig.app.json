@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/web-dex",
+    "types": []
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  
+    , "../../libs/feature-orders/src/index.ts"
+
+
+    , "../../libs/feature-dashboard/src/index.ts"
+
+    , "../../libs/feature-menu/src/index.ts"
+]
+}

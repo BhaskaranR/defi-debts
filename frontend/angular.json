@@ -1,0 +1,199 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "",
+    "projects": {
+        "web-dex": {
+            "root": "apps/web-dex/",
+            "sourceRoot": "apps/web-dex/src",
+            "projectType": "application",
+            "prefix": "dex",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/web-dex",
+                        "index": "apps/web-dex/src/index.html",
+                        "main": "apps/web-dex/src/main.ts",
+                        "polyfills": "apps/web-dex/src/polyfills.ts",
+                        "tsConfig": "apps/web-dex/tsconfig.app.json",
+                        "assets": [
+                            "apps/web-dex/src/favicon.ico",
+                            "apps/web-dex/src/assets",
+                            "apps/web-dex/src/manifest.webmanifest",
+                            "apps/web-dex/src/app-metadata.json",
+                            "apps/web-dex/src/chain-manifests.json",
+                            "apps/web-dex/src/icon.png",
+                            "apps/web-dex/src/eosiologo.png"
+                        ],
+                        "styles": [
+                            "apps/web-dex/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "environments/environment.ts",
+                                "with": "environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2mb",
+                                "maximumError": "5mb"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "web-dex:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "web-dex:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "web-dex:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "apps/web-dex/src/test.ts",
+                        "polyfills": "apps/web-dex/src/polyfills.ts",
+                        "tsConfig": "apps/web-dex/tsconfig.spec.json",
+                        "karmaConfig": "apps/web-dex/karma.conf.js",
+                        "styles": [
+                            "apps/web-dex/src/styles.scss"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "apps/web-dex/src/favicon.ico",
+                            "apps/web-dex/src/assets"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/web-dex/tsconfig.app.json",
+                            "apps/web-dex/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "web-dex-e2e": {
+            "root": "apps/web-dex-e2e",
+            "projectType": "application",
+            "prefix": "",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "apps/web-dex-e2e/protractor.conf.js",
+                        "devServerTarget": "web-dex:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "web-dex:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "apps/web-dex-e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "feature-dashboard": {
+            "root": "libs/feature-dashboard",
+            "sourceRoot": "libs/feature-dashboard/src",
+            "projectType": "library",
+            "prefix": "dex",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-dashboard/src/test.ts",
+                        "tsConfig": "libs/feature-dashboard/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-dashboard/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-dashboard/tsconfig.lib.json",
+                            "libs/feature-dashboard/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "feature-menu": {
+            "root": "libs/feature-menu",
+            "sourceRoot": "libs/feature-menu/src",
+            "projectType": "library",
+            "prefix": "dex",
+            "architect": {
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "libs/feature-menu/src/test.ts",
+                        "tsConfig": "libs/feature-menu/tsconfig.spec.json",
+                        "karmaConfig": "libs/feature-menu/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/feature-menu/tsconfig.lib.json",
+                            "libs/feature-menu/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "cli": {
+        "warnings": {
+            "typescriptMismatch": false,
+            "versionMismatch": false
+        },
+        "defaultCollection": "@nrwl/schematics"
+    },
+    "defaultProject": "web-dex"
+}
