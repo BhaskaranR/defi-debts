@@ -130,62 +130,6 @@
                     }
                 }
             }
-        },
-        "feature-dashboard": {
-            "root": "libs/feature-dashboard",
-            "sourceRoot": "libs/feature-dashboard/src",
-            "projectType": "library",
-            "prefix": "dex",
-            "architect": {
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "libs/feature-dashboard/src/test.ts",
-                        "tsConfig": "libs/feature-dashboard/tsconfig.spec.json",
-                        "karmaConfig": "libs/feature-dashboard/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/feature-dashboard/tsconfig.lib.json",
-                            "libs/feature-dashboard/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
-        "feature-menu": {
-            "root": "libs/feature-menu",
-            "sourceRoot": "libs/feature-menu/src",
-            "projectType": "library",
-            "prefix": "dex",
-            "architect": {
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "libs/feature-menu/src/test.ts",
-                        "tsConfig": "libs/feature-menu/tsconfig.spec.json",
-                        "karmaConfig": "libs/feature-menu/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/feature-menu/tsconfig.lib.json",
-                            "libs/feature-menu/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
         }
     },
     "cli": {

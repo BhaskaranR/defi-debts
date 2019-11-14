@@ -28,8 +28,9 @@ import {AuthGuard} from './auth.guard';
 import { Welcomepage } from "./welcomepage/welcomepage";
 import { environment } from '@dex-env';
 import { SvgViewerModule } from './svg-viewer/svg-viewer';
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
-const appName = 'demo';
+const appName = 'BlokTrading';
 const chain: Chain = {
   chainId: environment.CHAIN_ID,
   rpcEndpoints: [{
@@ -62,7 +63,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, Welcomepage],
+  declarations: [AppComponent, NavBarComponent, Welcomepage, DashboardComponent],
   imports: [
     BrowserModule,
     SvgViewerModule,
@@ -74,7 +75,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
-    ApiModule,
+   // ApiModule,
     FlexLayoutModule,
     MatIconModule,
     MatListModule,
@@ -91,28 +92,13 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
           pathMatch: "full"
         },
         {
-          path:'welcome',
-          component: Welcomepage
-        },
-        {
           path: "dashboard",
-          loadChildren: "@dex/feature-dashboard#FeatureRestaurantDashboardModule",
+          component:DashboardComponent,
           canActivate:[AuthGuard]
-        },                             
-        // {
-        //   path: "profile",
-        //   loadChildren: "@dex/feature-profile#FeatureRestaurantProfileModule",
-        //   canActivate:[AuthGuard],
-        // },
-        // { 
-        //   path: "orders", 
-        //   loadChildren: "@dex/feature-orders#FeatureRestaurantOrdersModule",
-        //   canActivate:[AuthGuard] 
-        // } ,
-        { 
-          path: 'menus', 
-          loadChildren: '@dex/feature-menu#FeatureRestaurantMenuModule',
-          canActivate:[AuthGuard] 
+        }, 
+        {
+          path:"welcome",
+          component:Welcomepage
         }
       ],
       { paramsInheritanceStrategy: "always" }

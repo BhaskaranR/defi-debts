@@ -20,18 +20,6 @@
       "*": ["types/*"],
       "@dex-env": ["environments/dex/environment.ts"],
       "@utils": ["libs/utils"],
-      "@dex/feature-order": [
-        "libs/feature-order/src/index.ts"
-      ],
-      "@dex/feature-orders": [
-        "libs/feature-orders/src/index.ts"
-      ],
-      "@dex/feature-dashboard": [
-        "libs/feature-dashboard/src/index.ts"
-      ],
-      "@dex/feature-menu": [
-        "libs/feature-menu/src/index.ts"
-      ],
       "jszip": [
         "./node_modules/jszip/dist/jszip.min.js"
       ]
