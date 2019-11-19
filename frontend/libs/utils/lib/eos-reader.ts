@@ -1,4 +1,4 @@
-import { environment  } from 'environments/dex/environment';
+import { environment } from '@dex-env';
 import {BigNumber} from 'bignumber.js';
 
 const formatRow = (result, model) => {

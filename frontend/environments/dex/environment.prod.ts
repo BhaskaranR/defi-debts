@@ -6,6 +6,6 @@ export const environment = {
     RPC_PROTOCOL: 'https',
     RPC_HOST: 'api.kylin.alohaeos.com',
     RPC_PORT: 443,
-    CONTRACT_NAME: "kmealowner12"
+    CONTRACT_NAME: "dbondsacc"
   };
   

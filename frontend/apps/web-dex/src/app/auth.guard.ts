@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot)
     {
         if (this.ualService.users$.value === null) {
-            this.router.navigate(['/welcome']);
+           // this.router.navigate(['/welcome']);
             return false;
         }
         return true;

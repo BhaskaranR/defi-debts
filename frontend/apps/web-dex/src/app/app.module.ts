@@ -10,10 +10,13 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatSidenavModule,
+  MatInputModule,
   MatIconModule,
   MatListModule,
-  MatMenuModule
+  MatMenuModule,
+  MatCardModule
 } from "@angular/material";
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NavBarComponent } from "./nav/nav.component";
@@ -22,13 +25,14 @@ import { UalModule, UalService } from 'ual-ngx-material-renderer';
 import { Chain } from 'universal-authenticator-library';
 import { Scatter } from 'ual-scatter';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
-
+import { ChartModule } from 'angular-highcharts';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {AuthGuard} from './auth.guard';
-import { Welcomepage } from "./welcomepage/welcomepage";
+import { AuthGuard } from './auth.guard';
 import { environment } from '@dex-env';
 import { SvgViewerModule } from './svg-viewer/svg-viewer';
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { AgGridModule } from '@ag-grid-community/angular';
+
 
 const appName = 'BlokTrading';
 const chain: Chain = {
@@ -63,7 +67,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, Welcomepage, DashboardComponent],
+  declarations: [AppComponent, NavBarComponent, DashboardComponent],
   imports: [
     BrowserModule,
     SvgViewerModule,
@@ -73,17 +77,24 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
       authenticators: [scatter, eosioAuth],
       appName
     }),
+    FlexLayoutModule.withConfig({
+      useColumnBasisZero: false,
+      printWithBreakpoints: ['md', 'lt-lg', 'lt-xl', 'gt-sm', 'gt-xs']
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
+    AgGridModule.withComponents([]),
    // ApiModule,
-    FlexLayoutModule,
     MatIconModule,
+    MatFormFieldModule,
     MatListModule,
-    FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
+    MatCardModule,
+    ChartModule,
+    MatInputModule,
     RouterModule.forRoot(
       [
         {
@@ -94,11 +105,6 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
         {
           path: "dashboard",
           component:DashboardComponent,
-          canActivate:[AuthGuard]
-        }, 
-        {
-          path:"welcome",
-          component:Welcomepage
         }
       ],
       { paramsInheritanceStrategy: "always" }
