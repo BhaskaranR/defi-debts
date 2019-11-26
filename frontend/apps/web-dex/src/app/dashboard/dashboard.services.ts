@@ -18,17 +18,18 @@ export class DashboarService {
        this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
     }
 
-    async buyBond(buyer, dbond_id, price){
+    async buyBond(dbond_id, price){
         return new Promise(async (resolve, reject) => {
             try {
                 if (!this.user || !this.accountName) {
                     this.user = this.ualService.users$.value;
                 }
 
-                const transaction = generateTransaction(this.accountName, "buy", {
-                    buyer: buyer,
-                    dbond_id:dbond_id,
-                    price:price
+                const transaction = generateTransaction(this.accountName, "transfer", {
+                    from: dbond_id,
+                    to:this.accountName,
+                    quantity:price,
+                    memo:"buy from " + dbond_id ,
                 });
                 
                 const res = await this.user.signTransaction(transaction, transactionConfig);

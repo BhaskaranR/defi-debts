@@ -32,6 +32,7 @@ import { environment } from '@dex-env';
 import { SvgViewerModule } from './svg-viewer/svg-viewer';
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AgGridModule } from '@ag-grid-community/angular';
+import { DashboarService } from "./dashboard/dashboard.services";
 
 
 const appName = 'BlokTrading';
@@ -115,6 +116,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
   bootstrap: [AppComponent],
   providers:[
     { provide: APP_INITIALIZER, useFactory: init_ual, deps: [UalService], multi: true },
+    DashboarService,
     AuthGuard]
 })
 export class AppModule { }

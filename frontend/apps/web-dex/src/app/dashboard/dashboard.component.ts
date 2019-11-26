@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Chart } from 'angular-highcharts';
 import {AllCommunityModules} from '@ag-grid-community/all-modules';
+import { DashboarService } from './dashboard.services';
 
 @Component({
   selector: 'dex-dashboard',
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private ualService: UalService) {
+    private ualService: UalService,private dashboarService:DashboarService) {
      }
 
     ngOnInit() {
@@ -65,6 +66,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.user =  val[val.length - 1];
           this.accountName = await this.user.getAccountName();
           this.isReady = true;
+
+          this.readData();
         } else {
           this.user = null;
           this.accountName = '';
@@ -75,5 +78,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
   
+    }
+
+    data:any;
+    private async readData(){
+      this.data = await this.dashboarService.readDbonds();
+      console.log(this.data);
+    }
+
+    bondSelected:any;
+    quantity:string;
+    buy(){
+      this.dashboarService.buyBond(this.bondSelected,this.quantity);
     }
 }
