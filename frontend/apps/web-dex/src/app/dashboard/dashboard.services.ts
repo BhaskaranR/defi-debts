@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
 import { environment } from '@dex-env';
-import { DBond } from "../models/models";
+import { DBond ,DBORDER} from "../models/models";
 const { format } = Eos.modules;
 
 @Injectable()
@@ -47,14 +47,36 @@ export class DashboarService {
              return;
          }
         const accountName = await users[0].getAccountName();
+        console.log('account name : ', accountName)
         return await read({
             reader: this.reader,
-            table: 'sec',
+            table: 'fcdbond',
+            limit: 100,
+            rowsOnly: true,
+            scope:accountName,
+            model: DBond,
+            index_position: 1,
+            index: format.encodeName(accountName, false)
+        });
+    }
+
+
+    async getOrders(){
+        const users = this.ualService.users$.value;
+         if (users == null || users.length <=0) {
+             return;
+         }
+        const accountName = await users[0].getAccountName();
+
+        return await read({
+            reader: this.reader,
+            table: 'fcdborders',
             limit: 100,
             rowsOnly: true,
             key_type: 'i64',
-            model: DBond,
-            index_position: 2,
+            scope:accountName,
+            model: DBORDER,
+            index_position: 1,
             index: format.encodeName(accountName, false)
         });
     }

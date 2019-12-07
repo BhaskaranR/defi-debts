@@ -55,6 +55,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   accountName:any;
   isReady: boolean = false;
 
+  blotterData:any[];
+
   constructor(
     private router: Router,
     private ualService: UalService,private dashboarService:DashboarService) {
@@ -68,12 +70,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.isReady = true;
 
           this.readData();
+
         } else {
           this.user = null;
           this.accountName = '';
           this.isReady = true;
         }
       });
+
+     // this.getBlotterData();
     }
 
     ngOnDestroy() {
@@ -90,5 +95,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
     quantity:string;
     buy(){
       this.dashboarService.buyBond(this.bondSelected,this.quantity);
+    }
+
+
+    async getBlotterData(){
+      let timer;
+      try{
+        this.blotterData = await this.readBlotter();
+        console.log('blotter : ', this.blotterData);
+        timer = setTimeout(() =>{
+          this.getBlotterData();
+        }, 2000);
+      }
+      catch(e){
+        clearTimeout(timer);
+        console.error('something just happened');
+      }
+    }
+
+    private async readBlotter(){
+      return await this.dashboarService.getOrders();
     }
 }
