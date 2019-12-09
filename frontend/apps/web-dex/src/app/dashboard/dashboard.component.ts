@@ -5,6 +5,7 @@ import {AllCommunityModules} from '@ag-grid-community/all-modules';
 import { DashboarService } from './dashboard.services';
 import { OfferDetailPopupComponent } from './offerDetailPopup.component';
 import { FormBuilder, Validators } from '@angular/forms';
+import {theme} from './highchart.theme';
 
 interface IOffer {
   id:string;
@@ -24,11 +25,10 @@ interface IOffer {
 export class DashboardComponent implements OnInit, OnDestroy {
 
   // isNextVersion = location.hostname.startsWith('next.material.angular.io');
-
-  chart = new Chart({
+  chartOptions = {
     chart: {
       type: 'line',
-      height:300
+      height:300,
     },
     title: {
       text: 'Offering'
@@ -59,7 +59,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         type:null
     }
     ]
-  });
+  }
+
+  chart = new Chart(Object.assign({}, this.chartOptions,theme));
 
   offerColumnDefs = [
       {headerName: 'Action',        field: null,            width:80,   cellRenderer: 'OfferDetailPopupComponent', },
@@ -121,6 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder) {}
 
     ngOnInit() {
+      console.log(this.chart);
       this.ualService.users$.subscribe(async val => {
         if (val !== null && val.length > 0) {
           this.user =  val[val.length - 1];
@@ -136,14 +139,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
     }
 
-    ngOnDestroy() {
-  
-    }
+    ngOnDestroy() {}
 
     private async readData(){
       const data = await this.dashboarService.readDbonds();
       this.offerData = data.map((d) => {
-        this.chart.addPoint(d.current_price.quantity);
+
         return {
           id:           d.dbond.dbond_id,
           currPrice:    d.current_price.quantity,
@@ -156,7 +157,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     bondSelected:any;
-    quantity:string;
     async onBuy(){
       const result = await this.dashboarService.buyBond(this.bondSelected,this.buyForm.value.amount);
       console.log(result);

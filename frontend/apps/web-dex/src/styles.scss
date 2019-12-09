@@ -1,142 +1,145 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
-
 @import '~ual-ngx-material-renderer/theme';
 // Plus imports for other components in your app.
-
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $web-dex-primary: mat-palette($mat-indigo);
 $web-dex-accent: mat-palette($mat-pink, A200, A100, A400);
-
 // The warn palette is optional (defaults to red).
 $web-dex-warn: mat-palette($mat-red);
-
 // Create the theme object (a Sass map containing all of the palettes).
 $web-dex-theme: mat-light-theme($web-dex-primary, $web-dex-accent, $web-dex-warn);
-
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($web-dex-theme);
-
 @include ual-theme($web-dex-theme);
 
 /* You can add global styles to this file, and also import other style files */
+
 @import 'scss/index';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'scss/404';
 @import 'scss/loader';
-
 $btn-size: 100px;
 $btn-arrowsize: $btn-size / 4;
-
 // Button colors
 $btn-color: hotpink;
 $btn-bg: rgb(255, 255, 255);
 $btn-border: rgb(238, 188, 213);
-
 // Button hover colors
 $btn-hover-color: rgb(245, 244, 244);
 $btn-bg-hover: rgb(49, 49, 49);
 $btn-hover-border-color: rgb(49, 49, 49);
-
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #b1b1b5;
+    background-color: rgb(30, 30, 47);
+}
+
+mat-card {
+    background-color: #27293d !important;
+    color: #b1b1b5 !important;
 }
 
 div.tile {
-  box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .leftRs {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
-  border-radius: 999px;
-  left: 0;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
+    border-radius: 999px;
+    left: 0;
 }
 
 .rightRs {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
-  border-radius: 999px;
-  right: 0;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
+    border-radius: 999px;
+    right: 0;
 }
 
 .arrowbtn {
-  position: absolute;
-  width: 50px;
-  height: auto;
-  background: $btn-bg;
-  border: 0px solid $btn-border;
-  opacity: 0.6;
-  color: $btn-color;
-  cursor: pointer;
-  top: 0;
-  bottom: 0;
-  line-height: 50;
-  margin: auto;
-  transition: all 0.25s ease-in-out;
-  border-top: 0;
-  border-bottom: 0;
-  &:hover {
-    background: $btn-bg-hover;
-    border-color: $btn-hover-border-color;
-    color: $btn-hover-color;
-    opacity: 0.8;
-  }
-  &:after {
     position: absolute;
-    display: inline-block;
-    content: '';
-    width: $btn-arrowsize;
-    height: $btn-arrowsize;
-    top: 50%;
-    left: 50%;
-  }
+    width: 50px;
+    height: auto;
+    background: $btn-bg;
+    border: 0px solid $btn-border;
+    opacity: 0.6;
+    color: $btn-color;
+    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    line-height: 50;
+    margin: auto;
+    transition: all 0.25s ease-in-out;
+    border-top: 0;
+    border-bottom: 0;
+    &:hover {
+        background: $btn-bg-hover;
+        border-color: $btn-hover-border-color;
+        color: $btn-hover-color;
+        opacity: 0.8;
+    }
+    &:after {
+        position: absolute;
+        display: inline-block;
+        content: '';
+        width: $btn-arrowsize;
+        height: $btn-arrowsize;
+        top: 50%;
+        left: 50%;
+    }
 }
 
 .arrowbtn-left {
-  left: 0;
-  border-left: 0;
-  &:after {
-    margin-left: -($btn-arrowsize * 0.25);
-    margin-top: -($btn-arrowsize * 0.5);
-    border-top: 1px solid;
-    border-left: 1px solid;
-    transform: rotateZ(-45deg);
-  }
+    left: 0;
+    border-left: 0;
+    &:after {
+        margin-left: -($btn-arrowsize * 0.25);
+        margin-top: -($btn-arrowsize * 0.5);
+        border-top: 1px solid;
+        border-left: 1px solid;
+        transform: rotateZ(-45deg);
+    }
 }
 
 .arrowbtn-right {
-  right: 0;
-  border-right: 0;
-  &:after {
-    margin-left: -($btn-arrowsize * 0.65);
-    margin-top: -($btn-arrowsize * 0.5);
-    border-bottom: 1px solid;
-    border-right: 1px solid;
-    transform: rotateZ(-45deg);
-  }
+    right: 0;
+    border-right: 0;
+    &:after {
+        margin-left: -($btn-arrowsize * 0.65);
+        margin-top: -($btn-arrowsize * 0.5);
+        border-bottom: 1px solid;
+        border-right: 1px solid;
+        transform: rotateZ(-45deg);
+    }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
