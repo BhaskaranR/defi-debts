@@ -33,6 +33,8 @@ import { SvgViewerModule } from './svg-viewer/svg-viewer';
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DashboarService } from "./dashboard/dashboard.services";
+import { OfferDetailPopupComponent } from "./dashboard/offerDetailPopup.component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const appName = 'BlokTrading';
@@ -68,7 +70,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, DashboardComponent],
+  declarations: [AppComponent, NavBarComponent, DashboardComponent, OfferDetailPopupComponent],
   imports: [
     BrowserModule,
     SvgViewerModule,
@@ -84,7 +86,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([OfferDetailPopupComponent]),
    // ApiModule,
     MatIconModule,
     MatFormFieldModule,
@@ -96,6 +98,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     MatCardModule,
     ChartModule,
     MatInputModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       [
         {

@@ -1,11 +1,19 @@
 import { Component, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { UalService } from 'ual-ngx-material-renderer';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Chart } from 'angular-highcharts';
+import { Chart} from 'angular-highcharts';
 import {AllCommunityModules} from '@ag-grid-community/all-modules';
 import { DashboarService } from './dashboard.services';
+import { OfferDetailPopupComponent } from './offerDetailPopup.component';
+import { FormBuilder, Validators } from '@angular/forms';
+
+interface IOffer {
+  id:string;
+  currPrice:string;
+  initPrice:string;
+  payoffPrice:string;
+  maturity:string;
+  qty:string;
+}
 
 @Component({
   selector: 'dex-dashboard',
@@ -19,82 +27,139 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   chart = new Chart({
     chart: {
-      type: 'line'
+      type: 'line',
+      height:300
     },
     title: {
-      text: 'Linechart'
+      text: 'Offering'
     },
     credits: {
       enabled: false
     },
     series: [
       {
-        name: 'Line 1',
-        data: [1, 2, 3],
+        name: 'DBOND',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
         type:null
-      }
+    }, {
+        name: 'BlackRock',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
+        type:null
+    }, {
+        name: 'JP Morgan',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+        type:null
+    }, {
+        name: 'Morgan Chase',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227],
+        type:null
+    }, {
+        name: 'UnitedHealdcare',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111],
+        type:null
+    }
     ]
   });
 
-  columnDefs = [
-      {headerName: 'Make',  field: 'make',  width:80 },
-      {headerName: 'Model', field: 'model', width:80 },
-      {headerName: 'Price', field: 'price', width:80 }
+  offerColumnDefs = [
+      {headerName: 'Action',        field: null,            width:80,   cellRenderer: 'OfferDetailPopupComponent', },
+      {headerName: 'Bond Id',       field: 'id',            width:120 },
+      {headerName: 'Current Price', field: 'currPrice',     width:120 },
+      {headerName: 'Initial Price', field: 'initPrice',     width:120 },
+      {headerName: 'Payoff Price',  field: 'payoffPrice',   width:120 },
+      {headerName: 'Maturity Time', field: 'maturityTime',  width:160 ,  filter: "agDateColumnFilter",},
+      {headerName: 'Qty to Issue',  field: 'quantity',      width:120 },
   ];
 
-  rowData = [
-      { make: 'Toyota',  model: 'Celica', price: 35000 },
-      { make: 'Ford',    model: 'Mondeo', price: 32000 },
-      { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];
+  defaultColDef = {
+    width:120,
+    resizable: true,
+    filter:true
+  }
+
+  public onSelectionChanged(e){
+    this.bondSelected = e.api.getSelectedRows()[0];
+    console.log(this.bondSelected);
+  }
+
+  offerApi:any;
+  offerGridColumnApi:any;
+  public onOfferGridReady(params){
+    this.offerApi = params.api;
+    this.offerGridColumnApi = params.columnApi;
+  }
+
+  offerData : any[];
+
+  blotterColumnDefs = [
+    {headerName: 'Action', cellRenderer: 'OfferDetailPopupComponent', width:80},
+    {headerName: 'Bond Id',  field: 'id',  width:120 },
+    {headerName: 'Current Price', field: 'currPrice', width:120 },
+    {headerName: 'Initial Price', field: 'initPrice', width:120 },
+    {headerName: 'Payoff Price', field: 'payoffPrice', width:120 },
+    {headerName: 'Maturity Time', field:'maturity',width:120, filter: "agDateColumnFilter",},
+    {headerName: 'Qty', field:'qty',width:120},
+];
+
+  blotterData : any[] = [];
 
   modules = AllCommunityModules;
+  frameworkComponents : {[key:string]:any} = {OfferDetailPopupComponent: OfferDetailPopupComponent}
 
-  private unsubscribe$ = new Subject();
   user:any;
   accountName:any;
   isReady: boolean = false;
 
-  blotterData:any[];
+  buyForm = this.fb.group({
+    amount: ['', Validators.required]
+  });
+
 
   constructor(
-    private router: Router,
-    private ualService: UalService,private dashboarService:DashboarService) {
-     }
+    private ualService: UalService,
+    private dashboarService:DashboarService,
+    private fb: FormBuilder) {}
 
     ngOnInit() {
       this.ualService.users$.subscribe(async val => {
         if (val !== null && val.length > 0) {
           this.user =  val[val.length - 1];
           this.accountName = await this.user.getAccountName();
+          await this.readData();
           this.isReady = true;
-
-          this.readData();
-
+          this.getBlotterData();
         } else {
           this.user = null;
           this.accountName = '';
           this.isReady = true;
         }
       });
-
-     // this.getBlotterData();
     }
 
     ngOnDestroy() {
   
     }
 
-    data:any;
     private async readData(){
-      this.data = await this.dashboarService.readDbonds();
-      console.log(this.data);
+      const data = await this.dashboarService.readDbonds();
+      this.offerData = data.map((d) => {
+        this.chart.addPoint(d.current_price.quantity);
+        return {
+          id:           d.dbond.dbond_id,
+          currPrice:    d.current_price.quantity,
+          initPrice:    d.initial_price.quantity,
+          payoffPrice:  d.dbond.payoff_price.quantity,
+          maturityTime: d.dbond.maturity_time,
+          quantity:     d.dbond.quantity_to_issue
+        }
+      });
     }
 
     bondSelected:any;
     quantity:string;
-    buy(){
-      this.dashboarService.buyBond(this.bondSelected,this.quantity);
+    async onBuy(){
+      const result = await this.dashboarService.buyBond(this.bondSelected,this.buyForm.value.amount);
+      console.log(result);
     }
 
 

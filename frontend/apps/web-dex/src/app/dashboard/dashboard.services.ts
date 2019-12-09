@@ -1,12 +1,9 @@
 import { Injectable } from "@angular/core";
 import * as Eos from 'eosjs';
 import { UalService } from 'ual-ngx-material-renderer';
-import { Subject } from "rxjs";
-import { takeUntil } from 'rxjs/operators';
 import { read, generateTransaction, transactionConfig } from '@utils';
 import { environment } from '@dex-env';
 import { DBond ,DBORDER} from "../models/models";
-const { format } = Eos.modules;
 
 @Injectable()
 export class DashboarService {
@@ -22,16 +19,18 @@ export class DashboarService {
         return new Promise(async (resolve, reject) => {
             try {
                 if (!this.user || !this.accountName) {
-                    this.user = this.ualService.users$.value;
+                    this.user = this.ualService.users$.value[0];
+                    this.accountName = this.user.accountName;
                 }
-
+    
                 const transaction = generateTransaction(this.accountName, "transfer", {
-                    from: dbond_id,
-                    to:this.accountName,
-                    quantity:price,
-                    memo:"buy from " + dbond_id ,
+                    from: this.accountName,
+                    to: 'hodldbondacc',
+                    quantity:price + ' DBONDA',
+                    memo:"sell DBONDA to banktestacc1",
                 });
                 
+                console.log(this.user, transaction);
                 const res = await this.user.signTransaction(transaction, transactionConfig);
                 resolve(res);
             }
@@ -55,8 +54,8 @@ export class DashboarService {
             rowsOnly: true,
             scope:accountName,
             model: DBond,
-            index_position: 1,
-            index: format.encodeName(accountName, false)
+            index_position: null,
+            index:null
         });
     }
 
@@ -76,8 +75,8 @@ export class DashboarService {
             key_type: 'i64',
             scope:accountName,
             model: DBORDER,
-            index_position: 1,
-            index: format.encodeName(accountName, false)
+            index_position: null,
+            index: null,
         });
     }
 
