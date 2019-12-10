@@ -1,0 +1,453 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [
+        {
+            "new_type_name": "dbond_id_class",
+            "type": "symbol_code"
+        }
+    ],
+    "structs": [
+        {
+            "name": "account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "confirmfcdb",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "currency_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "max_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "dbond",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                },
+                {
+                    "name": "emitent",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity_to_issue",
+                    "type": "asset"
+                },
+                {
+                    "name": "maturity_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "retire_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "payoff_price",
+                    "type": "extended_asset"
+                },
+                {
+                    "name": "fungible",
+                    "type": "bool"
+                },
+                {
+                    "name": "additional_info",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "erase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "holders",
+                    "type": "name[]"
+                },
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                }
+            ]
+        },
+        {
+            "name": "fc_dbond",
+            "base": "dbond",
+            "fields": [
+                {
+                    "name": "collateral_bond",
+                    "type": "fiat_bond"
+                },
+                {
+                    "name": "verifier",
+                    "type": "name"
+                },
+                {
+                    "name": "counterparty",
+                    "type": "name"
+                },
+                {
+                    "name": "liquidation_agent",
+                    "type": "name"
+                },
+                {
+                    "name": "escrow_contract_link",
+                    "type": "string"
+                },
+                {
+                    "name": "apr",
+                    "type": "int64"
+                },
+                {
+                    "name": "holders_list",
+                    "type": "name[]"
+                }
+            ]
+        },
+        {
+            "name": "fc_dbond_order_struct",
+            "base": "",
+            "fields": [
+                {
+                    "name": "seller",
+                    "type": "name"
+                },
+                {
+                    "name": "buyer",
+                    "type": "name"
+                },
+                {
+                    "name": "recieved_payment",
+                    "type": "extended_asset"
+                },
+                {
+                    "name": "recieved_quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "price",
+                    "type": "extended_asset"
+                }
+            ]
+        },
+        {
+            "name": "fc_dbond_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond",
+                    "type": "fc_dbond"
+                },
+                {
+                    "name": "initial_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "initial_price",
+                    "type": "extended_asset"
+                },
+                {
+                    "name": "current_price",
+                    "type": "extended_asset"
+                },
+                {
+                    "name": "fc_state",
+                    "type": "int32"
+                },
+                {
+                    "name": "confirmed_by_counterparty",
+                    "type": "int32"
+                }
+            ]
+        },
+        {
+            "name": "fiat_bond",
+            "base": "",
+            "fields": [
+                {
+                    "name": "ISIN",
+                    "type": "string"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "issuer",
+                    "type": "string"
+                },
+                {
+                    "name": "currency",
+                    "type": "string"
+                },
+                {
+                    "name": "maturity_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "bond_description_webpage",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "initfcdb",
+            "base": "",
+            "fields": [
+                {
+                    "name": "bond",
+                    "type": "fc_dbond"
+                }
+            ]
+        },
+        {
+            "name": "issue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "issuefcdb",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                }
+            ]
+        },
+        {
+            "name": "listprivord",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                },
+                {
+                    "name": "seller",
+                    "type": "name"
+                },
+                {
+                    "name": "buyer",
+                    "type": "name"
+                },
+                {
+                    "name": "recieved_asset",
+                    "type": "extended_asset"
+                },
+                {
+                    "name": "is_sell",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "setstate",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                },
+                {
+                    "name": "state",
+                    "type": "int32"
+                }
+            ]
+        },
+        {
+            "name": "transfer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "updfcdb",
+            "base": "",
+            "fields": [
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                }
+            ]
+        },
+        {
+            "name": "verifyfcdb",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "dbond_id",
+                    "type": "dbond_id_class"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "confirmfcdb",
+            "type": "confirmfcdb",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "erase",
+            "type": "erase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "initfcdb",
+            "type": "initfcdb",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "issue",
+            "type": "issue",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "issuefcdb",
+            "type": "issuefcdb",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "listprivord",
+            "type": "listprivord",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setstate",
+            "type": "setstate",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transfer",
+            "type": "transfer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "updfcdb",
+            "type": "updfcdb",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "verifyfcdb",
+            "type": "verifyfcdb",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "accounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "fcdbond",
+            "type": "fc_dbond_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "fcdborders",
+            "type": "fc_dbond_order_struct",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "stat",
+            "type": "currency_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}
