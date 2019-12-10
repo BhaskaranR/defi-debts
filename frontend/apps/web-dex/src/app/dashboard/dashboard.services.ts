@@ -15,7 +15,7 @@ export class DashboarService {
        this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
     }
 
-    async buyBond(dbond_id, price){
+    async buyBond(price){
         return new Promise(async (resolve, reject) => {
             try {
                 if (!this.user || !this.accountName) {

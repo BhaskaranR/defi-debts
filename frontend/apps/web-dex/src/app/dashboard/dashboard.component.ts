@@ -81,7 +81,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public onSelectionChanged(e){
     this.bondSelected = e.api.getSelectedRows()[0];
-    console.log(this.bondSelected);
   }
 
   offerApi:any;
@@ -158,7 +157,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     bondSelected:any;
     async onBuy(){
-      const result = await this.dashboarService.buyBond(this.bondSelected,this.buyForm.value.amount);
+      
+      const result = await this.dashboarService.buyBond(this.buyForm.value.amount);
       console.log(result);
     }
 
