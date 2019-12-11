@@ -6,6 +6,8 @@ import { DashboarService } from './dashboard.services';
 import { OfferDetailPopupComponent } from './offerDetailPopup.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import {theme} from './highchart.theme';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 interface IOffer {
   id:string;
@@ -15,6 +17,12 @@ interface IOffer {
   maturity:string;
   qty:string;
 }
+
+@Component({
+  selector: 'snack-bar',
+  template:"Something went wrong!",
+})
+export class ErrorComponent {}
 
 @Component({
   selector: 'dex-dashboard',
@@ -119,6 +127,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private ualService: UalService,
     private dashboarService:DashboarService,
+    private _snackBar: MatSnackBar,
     private fb: FormBuilder) {}
 
     ngOnInit() {
@@ -139,6 +148,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {}
+
+    gridApi:any;
+    onGridReady(params){
+      this.gridApi = params.api;
+    }
 
     private async readData(){
       const data = await this.dashboarService.readDbonds();
@@ -166,7 +180,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     async getBlotterData(){
       let timer;
       try{
-        this.blotterData = await this.readBlotter();
+        const data = await this.readBlotter();
+        if (!!data && data.length > 0 ){
+          this.gridApi.setRowData(data);
+        }
         console.log('blotter : ', this.blotterData);
         timer = setTimeout(() =>{
           this.getBlotterData();
@@ -175,6 +192,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       catch(e){
         clearTimeout(timer);
         console.error('something just happened');
+        this._snackBar.openFromComponent(ErrorComponent, {
+          duration: 2000,
+        });
       }
     }
 

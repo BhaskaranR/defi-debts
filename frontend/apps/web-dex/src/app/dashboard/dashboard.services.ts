@@ -26,7 +26,7 @@ export class DashboarService {
                 const transaction = generateTransaction(this.accountName, "transfer", {
                     from: this.accountName,
                     to: 'hodldbondacc',
-                    quantity:price + ' DBONDA',
+                    quantity:price.toFixed(2) + ' DBONDA',
                     memo:"sell DBONDA to banktestacc1",
                 });
                 
@@ -72,7 +72,6 @@ export class DashboarService {
             table: 'fcdborders',
             limit: 100,
             rowsOnly: true,
-            key_type: 'i64',
             scope:accountName,
             model: DBORDER,
             index_position: null,
