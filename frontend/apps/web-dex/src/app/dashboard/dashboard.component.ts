@@ -173,7 +173,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private async readData(){
       const data = await this.dashboarService.readDbonds();
-      console.log(data);
+
       this.offerData = data.map((d) => {
         return {
           id:           d.dbond.dbond_id,
@@ -253,7 +253,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
           type:null,
         };
 
-        console.log(series);
+        this.chart['options'].xAxis.categories = [
+          moment(new Date()).format('MM/DD/YYYY'), 
+          moment(new Date()).add(xDays, 'days').format('MM/DD/YYYY'),
+          moment(new Date()).add(xDays * 2, 'days').format('MM/DD/YYYY'),
+          moment(new Date()).add(xDays * 3, 'days').format('MM/DD/YYYY'),
+          moment(new Date()).add(xDays * 4, 'days').format('MM/DD/YYYY')
+        ];
+
         this.chartOptions.series.push(series);
         
       });

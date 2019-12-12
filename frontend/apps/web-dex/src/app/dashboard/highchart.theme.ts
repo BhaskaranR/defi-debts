@@ -30,12 +30,8 @@ export const theme =  {
     },
     xAxis: {
         gridLineColor: '#707073',
+        categories:[],
         labels: {
-            formatter:function(){
-                let idx = this.value;
-
-                return this.chart.options.series[0].data[idx][0];
-            },
             enabled:true,
             style: {
                 color: '#E0E0E3'
