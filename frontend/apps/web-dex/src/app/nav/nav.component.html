@@ -4,15 +4,17 @@
      fxLayoutGap="15px"
      fxLayoutGap.xs="0">
     <div fxFlex="90px" fxFlex.sm="90px" fxFlex.xs="90px">
+
         <a mat-button class="button" routerLink="/" aria-label="DEX">
-            <span>DEX</span>
+            <img  src="../../assets/icons/logo.png" style="width:45px;height:40px;">
+            <span>HODLERS</span>
         </a>
     </div>
-    <ng-container *ngIf="user != undefined && user != null">
+    <!-- <ng-container *ngIf="user != undefined && user != null">
         <div  *ngFor="let key of sectionKeys">
             <a mat-button class="button" [routerLink]="key" aria-label="DEX">{{sections[key].name}}</a>
         </div>
-    </ng-container>
+    </ng-container> -->
     <div fxFlex="75%" 
         fxFlex.sm="20%" 
         fxFlex.xs="20%" 

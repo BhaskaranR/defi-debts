@@ -195,6 +195,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     async onBuy(){
       try{
       const result = await this.dashboarService.transfer(this.buyForm.value.amount, this.bondSelected.id);
+      await this.getBlotterData()
       }catch(e){
         this._snackBar.open('something went wrong');
         console.log(e);

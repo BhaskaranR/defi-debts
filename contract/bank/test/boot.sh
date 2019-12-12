@@ -70,20 +70,20 @@
 # transfer_eos $BANK_ACC $TEST_ACC "$eos_balance EOS" "refund"
 # pause
 
-# title "Create dbond"
-# initfcdb
+title "Create dbond"
+initfcdb
+pause
+title "Verify dbond"
+verifyfcdb
+pause
+title "Issue dbond"
+issuefcdb
+pause
+title "Authorize dbond"
+authdbond
 # pause
-# title "Verify dbond"
-# verifyfcdb
-# pause
-# title "Issue dbond"
-# issuefcdb
-# pause
-# title "Authorize dbond"
-# authdbond
-# pause
-title "Sell dbond to bank"
-must_pass "Sell dbond to bank" transfer_to_sell $emitent $DBONDS "1.00 $bond_name" $bond_name
+# title "Sell dbond to bank"
+# must_pass "Sell dbond to bank" transfer_to_sell $emitent $DBONDS "1.00 $bond_name" $bond_name
 # pause
 
 # evaluate_assets
