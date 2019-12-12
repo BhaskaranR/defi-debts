@@ -24,11 +24,19 @@ export class DashboarService {
                 }
     
                 const transaction = generateTransaction(this.accountName, "transfer", {
+<<<<<<< HEAD
                     "from": "testuserid11",
                     "memo": "sell DBONDB to banktestacc1",
                     "quantity": "5.00 DBONDB",
                     "to": "hodldbondacc"
                  });
+=======
+                    from: this.accountName,
+                    to: 'hodldbondacc',
+                    quantity:price.toFixed(2) + ' DBONDA',
+                    memo:"sell DBONDA to banktestacc1",
+                });
+>>>>>>> cc84aae3836757a663d4cb0b6edef23b6773c5f3
                 
                 console.log(this.user, transaction);
                 const res = await this.user.signTransaction(transaction, transactionConfig);
@@ -72,7 +80,6 @@ export class DashboarService {
             table: 'fcdborders',
             limit: 100,
             rowsOnly: true,
-            key_type: 'i64',
             scope:accountName,
             model: DBORDER,
             index_position: null,
