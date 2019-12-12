@@ -1,4 +1,4 @@
-import { Component, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UalService } from 'ual-ngx-material-renderer';
 import { Chart} from 'angular-highcharts';
 import {AllCommunityModules} from '@ag-grid-community/all-modules';
@@ -7,7 +7,7 @@ import { OfferDetailPopupComponent } from './offerDetailPopup.component';
 import { FormBuilder, Validators } from '@angular/forms';
 import {theme} from './highchart.theme';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
+import * as moment from 'moment';
 
 interface IOffer {
   id:string;
@@ -18,58 +18,40 @@ interface IOffer {
   qty:string;
 }
 
+interface IChart {
+  name:string,
+  data:number[],
+  type:string | null
+}
+
 @Component({
   selector: 'snack-bar',
   template:"Something went wrong!",
 })
 export class ErrorComponent {}
 
+
+
 @Component({
   selector: 'dex-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-// tslint:disable-next-line: component-class-suffix
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  // isNextVersion = location.hostname.startsWith('next.material.angular.io');
+
   chartOptions = {
     chart: {
       type: 'line',
       height:300,
     },
-    title: {
-      text: 'Offering'
-    },
     credits: {
       enabled: false
     },
-    series: [
-      {
-        name: 'DBOND',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
-        type:null
-    }, {
-        name: 'BlackRock',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
-        type:null
-    }, {
-        name: 'JP Morgan',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
-        type:null
-    }, {
-        name: 'Morgan Chase',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227],
-        type:null
-    }, {
-        name: 'UnitedHealdcare',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111],
-        type:null
-    }
-    ]
+    series: []
   }
 
-  chart = new Chart(Object.assign({}, this.chartOptions,theme));
+  chart = new Chart(Object.assign({},this.chartOptions, theme));
 
   offerColumnDefs = [
       {headerName: 'Action',        field: null,            width:80,   cellRenderer: 'OfferDetailPopupComponent', },
@@ -131,12 +113,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder) {}
 
     ngOnInit() {
-      console.log(this.chart);
+
       this.ualService.users$.subscribe(async val => {
         if (val !== null && val.length > 0) {
           this.user =  val[val.length - 1];
           this.accountName = await this.user.getAccountName();
+
           await this.readData();
+           if (this.offerData.length == 0) {
+             this._snackBar.open('no data available');
+             return;
+           }
+          this.generateChartData(this.offerData);
+
           this.isReady = true;
           this.getBlotterData();
         } else {
@@ -156,15 +145,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private async readData(){
       const data = await this.dashboarService.readDbonds();
+      console.log(data);
       this.offerData = data.map((d) => {
-
         return {
           id:           d.dbond.dbond_id,
           currPrice:    d.current_price.quantity,
           initPrice:    d.initial_price.quantity,
           payoffPrice:  d.dbond.payoff_price.quantity,
           maturityTime: d.dbond.maturity_time,
-          quantity:     d.dbond.quantity_to_issue
+          quantity:     d.dbond.quantity_to_issue,
+          apr:          d.dbond.apr
         }
       });
     }
@@ -191,7 +181,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
       catch(e){
         clearTimeout(timer);
-        console.error('something just happened');
         this._snackBar.openFromComponent(ErrorComponent, {
           duration: 2000,
         });
@@ -200,5 +189,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private async readBlotter(){
       return await this.dashboarService.getOrders();
+    }
+
+    private generateChartData(data){
+
+      data.forEach((r) => {
+        
+        let daysDiff = moment(r.maturityTime).diff(moment(),'days');
+        let sInYear = 365;
+        let currPrice = 0;
+
+        if (daysDiff > 0) {
+          let b = parseFloat(r.payoffPrice.replace('  BONDB',''));
+          currPrice = b / (1.00 + r.apr / 1e4 * daysDiff / sInYear);
+        }
+
+        let xDays = Number(daysDiff/4);
+        let splits = r.currPrice.split(' ');
+        let basePrice = parseFloat(splits[0]);
+
+        let data = [
+          [moment(new Date()).format('MM/DD/YYYY'), basePrice],
+          [moment(new Date()).add(xDays, 'days').format('MM/DD/YYYY'), (basePrice + currPrice) ],
+          [moment(new Date()).add(xDays * 2, 'days').format('MM/DD/YYYY'), (basePrice+ currPrice * 2 ) ],
+          [moment(new Date()).add(xDays * 3, 'days').format('MM/DD/YYYY'), (basePrice + currPrice * 3) ],
+          [moment(new Date()).add(xDays * 4, 'days').format('MM/DD/YYYY'), (basePrice + currPrice * 4) ],
+        ]
+        
+        let series = {
+          name: r.id,
+          data:data,
+          type:null,
+        };
+
+        console.log(series);
+        this.chartOptions.series.push(series);
+        
+      });
+
     }
 }

@@ -2,6 +2,7 @@ export const theme =  {
     colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066',
         '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
     chart: {
+        height:300,
         backgroundColor: {
             stops: [
                 [0, '#2a2a2b'],
@@ -14,6 +15,7 @@ export const theme =  {
         plotBorderColor: '#606063'
     },
     title: {
+        text: 'Offering',
         style: {
             color: '#E0E0E3',
             textTransform: 'uppercase',
@@ -29,6 +31,12 @@ export const theme =  {
     xAxis: {
         gridLineColor: '#707073',
         labels: {
+            formatter:function(){
+                let idx = this.value;
+
+                return this.chart.options.series[0].data[idx][0];
+            },
+            enabled:true,
             style: {
                 color: '#E0E0E3'
             }
@@ -37,10 +45,12 @@ export const theme =  {
         minorGridLineColor: '#505053',
         tickColor: '#707073',
         title: {
+            text:'Dates',
             style: {
                 color: '#A0A0A3'
             }
-        }
+        },
+        
     },
     yAxis: {
         gridLineColor: '#707073',
@@ -54,6 +64,7 @@ export const theme =  {
         tickColor: '#707073',
         tickWidth: 1,
         title: {
+            text:'Price ($)',
             style: {
                 color: '#A0A0A3'
             }
