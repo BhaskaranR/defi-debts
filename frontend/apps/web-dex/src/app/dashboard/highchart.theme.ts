@@ -60,7 +60,7 @@ export const theme =  {
         tickColor: '#707073',
         tickWidth: 1,
         title: {
-            text:'Price ($)',
+            text:'Price (DUSD)',
             style: {
                 color: '#A0A0A3'
             }
