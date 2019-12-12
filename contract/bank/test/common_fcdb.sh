@@ -3,19 +3,18 @@
 # . ./env.sh
 # . ./functions.sh
 
-now=`date +%s`
-now_plus_year=$((now+24*3600*365))
-now_plus_360=$((now+24*3600*360))
-now_plus_375=$((now+24*3600*375))
-dbond_maturity_time=`date --date=@"$now_plus_360" +%FT%T:000`
-maturity_time=`date --date=@"$now_plus_year" +%FT%T:000`
-dbond_retire_time=`date --date=@"$now_plus_375" +%FT%T:000`
 
-fiatbond='{"ISIN":"sdf", "name":"sdf", "currency":"sdf", "maturity_time": "'$maturity_time'", "bond_description_webpage":"sdf"}'
+dbond_maturity_time=`date -v +360d +%FT%T:000`
+maturity_time=`date -v +365d +%FT%T:000`
+dbond_retire_time=`date -v +375d +%FT%T:000`
 
-bond_name=DBONDA
+
+
+fiatbond='{"ISIN":"sdf",  "issuer": "'$emitent'", "name":"sdf", "currency":"sdf", "maturity_time": "'$maturity_time'", "bond_description_webpage":"sdf"}'
+
+bond_name=BONDB
 emitent=$TESTACC
-verifier=deposcustody
+verifier=custodianacc
 counterparty=banktestacc1
 liquidation_agent=banktestacc1
 quantity_to_issue="1.00 $bond_name"
@@ -28,6 +27,7 @@ payoff_quantity="$payoff_amount $payoff_symbol"
 payoff_price='{"quantity": "'$payoff_quantity'", "contract": "'$payoff_contract'"}'
 
 bond_spec='{"dbond_id": "'$bond_name'",
+	"issuer": "'$emitent'",
 	"emitent": "'$emitent'",
 	"quantity_to_issue": "'$quantity_to_issue'",
 	"maturity_time": "'$dbond_maturity_time'",
@@ -52,6 +52,7 @@ payoff_quantity2="$payoff_amount2 $payoff_symbol"
 payoff_price2='{"quantity": "'$payoff_quantity2'", "contract": "'$payoff_contract'"}'
 
 bond_spec2='{"dbond_id": "'$bond_name2'",
+	"issuer": "'$emitent'",
 	"emitent": "'$emitent'",
 	"quantity_to_issue": "'$quantity_to_issue2'",
 	"maturity_time": "'$dbond_maturity_time'",

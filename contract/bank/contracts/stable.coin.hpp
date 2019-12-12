@@ -28,8 +28,8 @@ enum Switches : int64_t {
 const name BANKACCOUNT("banktestacc1");
 const name CUSTODIAN("deposcustody");
 const name ADMINACCOUNT("bankadminacc");
-const name DEVELACCOUNT("deposdevelop");
-const name ORACLEACC("deposoracle1");
+const name DEVELACCOUNT("testdevacc12");
+const name ORACLEACC("testoracle12");
 const name BITMEXACC("bitmex");
 const name EOSIOTOKEN("eosio.token");
 

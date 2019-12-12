@@ -71,7 +71,7 @@ public:
 	 * Called by 'listfcdbsale' action of 'dbonds' contract.
 	 * Used to implement selling dbonds by holders to bank.
 	 */
-	// [[eosio::on_notify("*::listprivord")]]
+	[[eosio::on_notify("*::listprivord")]]
 	void on_fcdb_trade_request(dbond_id_class dbond_id, name seller, name buyer, extended_asset recieved_asset, bool is_sell);
 
 	/*
@@ -81,14 +81,14 @@ public:
 	void ondbonderase(vector<name> holders, dbond_id_class dbond_id) {
 		name dbond_contract = get_first_receiver();
 		eosio::print(dbond_contract);
-		// variables dbcontracts(_self, "dbonds"_n.value);
-		// if(dbcontracts.find(dbond_contract.value) != dbcontracts.end()) {
+		variables dbcontracts(_self, "dbonds"_n.value);
+		if(dbcontracts.find(dbond_contract.value) != dbcontracts.end()) {
 			authorized_dbonds dblist(_self, _self.value);
 			auto existing = dblist.find(dbond_id.raw());
 			if(existing != dblist.end()) {
 				dblist.erase(existing);
 			}
-		// }
+		}
 	}
 
 	#ifdef DEBUG

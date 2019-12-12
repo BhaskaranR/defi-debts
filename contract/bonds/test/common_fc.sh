@@ -21,12 +21,12 @@ dbond_retire_time=`date -v +375d +%FT%T:000`
 fiatbond='{"ISIN":"sdf", "name":"sdf", "currency":"sdf", 	"issuer": "'$emitent'",
  "maturity_time": "'$maturity_time'", "bond_description_webpage":"sdf"}'
 
-bond_name=DBONDA
+bond_name=DBONDB
 emitent=$TESTACC
 verifier=custodianacc
 counterparty=banktestacc1
 liquidation_agent=banktestacc1
-quantity_to_issue="5.00 $bond_name"
+quantity_to_issue="10.00 $bond_name"
 holders_list='["'$emitent'", "'$counterparty'", "'$DBONDS'"]'
 
 payoff_symbol='DUSD'
@@ -91,9 +91,9 @@ function erase {
 	done
 	names="${names%??}"
 	names=${names:-$emitent}
-	args="[[$names], \"$bond_name\"]"
-
-	# echo $DBONDS
+	# args="[[$names], \"$BONDB\"]"
+	args="[[$names], \"BONDB\"]"
+	 echo $args
 	 cleos -u $API_URL push action $DBONDS erase "$args" -p $DBONDS@active
 }
 

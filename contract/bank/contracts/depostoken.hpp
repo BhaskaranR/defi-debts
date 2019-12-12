@@ -205,6 +205,7 @@ void token::create( name issuer, asset maximum_supply )
 
 void token::issue(name to, asset quantity, string memo)
 {
+	eosio::print("token issue");
 	auto sym = quantity.symbol;
 	check( sym.is_valid(), "invalid symbol name" );
 	check( memo.size() <= 256, "memo has more than 256 bytes" );
@@ -227,7 +228,7 @@ void token::issue(name to, asset quantity, string memo)
 	});
 
 	add_balance( st.issuer, quantity, st.issuer );
-
+	
 	if( to != st.issuer ) {
 		SEND_INLINE_ACTION( *this, transfer, { {st.issuer, "active"_n} }, { st.issuer, to, quantity, memo } );
 	}

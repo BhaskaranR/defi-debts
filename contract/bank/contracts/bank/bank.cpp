@@ -20,90 +20,14 @@ using namespace dbonds;
 
 ACTION bank::transfer(name from, name to, asset quantity, string memo)
 {
-	check_transfer(from, to, quantity, memo);
-
-	check_main_switch();
-
-#ifdef DEBUG
-		if(match_memo(memo, "debug"))
-		{
-			process_regular_transfer(from, to, quantity, memo);
-			check_on_transfer(from, to, {quantity, BANKACCOUNT}, memo);
-			SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
-			return;
-		}
-#endif
-
-	// if regular p2p transfer or special with no reaction needed
-	if((from != BANKACCOUNT && to != BANKACCOUNT) || memo == "deny") {
-		process_regular_transfer(from, to, quantity, memo);
-		if(memo == "deny") {
-			check_on_system_change();
-		}
-	}
-
+ 	// check_transfer(from, to, quantity, memo);
+ 	// check_main_switch();
 	// if transfer from _self then do service transfer
-	else if(from == BANKACCOUNT) {
+	//else if(from == BANKACCOUNT) {
+	 if(from == BANKACCOUNT) {
 		process_service_transfer(from, to, quantity, memo);
-		check_on_system_change();
+		// check_on_system_change();
 		return;
-	}
-
-	// if to == _self and asset is DUSD
-	else if(quantity.symbol == DUSD) {
-		check_on_transfer(from, to, {quantity, BANKACCOUNT}, memo);
-		// if user transfers dusd to buy dps
-		if(match_memo(memo,"Buy DPS"))
-			process_exchange_DUSD_for_DPS(from, to, quantity, memo);
-		// if transfer is to redeem dusd for dbtc/btc/eos
-		else if(is_dusd_redeem(from, to, extended_asset(quantity, _self), memo)) {
-			bool valid_transfer = false;
-			if(is_approved_liquid_asset(extended_asset(asset(0, DBTC), CUSTODIAN))) {
-				// redeem DUSD for DBTC
-				if(match_memo(memo, "Redeem for DBTC")) {
-					process_redeem_DUSD_for_DBTC(from, to, quantity, memo);
-					valid_transfer = true;
-				}
-				// otherwie it is supposed, that it is BTC withdrwal via CUSTODIAN
-				else if(validate_btc_address(memo, BITCOIN_TESTNET)) {
-					process_redeem_DUSD_for_BTC(from, to, quantity, memo);
-					valid_transfer = true;
-				}
-
-			}
-			// if EOS is approved and supported
-			if(is_approved_liquid_asset(extended_asset(asset(0, EOS), EOSIOTOKEN))) {
-				// redeem DUSD for EOS
-				if(match_memo(memo, "Redeem for EOS")) {
-					process_redeem_DUSD_for_EOS(from, to, quantity, memo);
-					valid_transfer = true;
-				}
-			}
-			check(valid_transfer, "transfer not allowed 8");
-		}
-		// if dbond-connected transfer
-		else if(is_dbond_contract(from)) {
-			process_regular_transfer(from, to, quantity, memo);
-			check_on_system_change();
-			SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
-		}
-		else
-			fail("transfer not allowed 3");
-	}
-
-	// if to == _self and asset is DPS
-	else if(quantity.symbol == DPS) {
-		// no check needed
-
-		// redeem DPS for DUSD, DBTC or BTC
-		if(match_memo(memo, "Redeem for DUSD"))
-			process_redeem_DPS_for_DUSD(from, to, quantity, memo);
-		//else if(match_memo(memo, "Redeem for DBTC"))
-		//	process_redeem_DPS_for_DBTC(from, to, quantity, memo);
-		//else if(validate_btc_address(memo, BITCOIN_TESTNET))
-		//	process_redeem_DPS_for_BTC(from, to, quantity, memo);
-		else
-			fail("transfer not allowed 4");
 	}
 
 	else fail("transfer not allowed 5");
@@ -175,12 +99,12 @@ void bank::ontransfer(name from, name to, asset quantity, const string& memo) {
 
 ACTION bank::issue( name to, asset quantity, string memo ) {
 	token::issue(to, quantity, memo);
-	if(quantity.symbol == DUSD && memo != "supply balancing")
-	{
-		SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
-	}
-	else
-		check_on_system_change(true);
+	// if(quantity.symbol == DUSD && memo != "supply balancing")
+	// {
+	// 	SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
+	// }
+	// else
+	// 	check_on_system_change(true);
 }
 
 ACTION bank::retire( asset quantity, string memo ) {
@@ -197,17 +121,18 @@ ACTION bank::retire( asset quantity, string memo ) {
 
 ACTION bank::setvar(name scope, name varname, int64_t value) {
 	token::setvar(scope, varname, value);
-
 	// balance DUSD supply:
 	// issue or retire tokens to keep supply equal to current USD value of BTC reserves
 	// do it only if reserve balances and BTC/USD rate variables are set and any of them is changed by this action
 	if( scope == PERIODIC_SCOPE && (varname == "btcusd"_n || varname == "btc.bitmex"_n))
 	{
+		
 		// to resolve cross-dependencies, disable supply balancing and checks, when any of these vars is undefined
 		variables vars(_self, PERIODIC_SCOPE.value);
 		if(vars.find("btcusd"_n.value) == vars.end() || vars.find("btc.bitmex"_n.value) == vars.end())
 			return;
-		SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
+		
+		 SEND_INLINE_ACTION(*this, blncsppl, {{_self, "active"_n}}, {});
 	}
 	// if(scope == SYSTEM_SCOPE)
 	// 	check_on_system_change(true); // change this to false

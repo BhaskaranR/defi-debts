@@ -24,11 +24,11 @@ export class DashboarService {
                 }
     
                 const transaction = generateTransaction(this.accountName, "transfer", {
-                    from: this.accountName,
-                    to: 'hodldbondacc',
-                    quantity:price + ' DBONDA',
-                    memo:"sell DBONDA to banktestacc1",
-                });
+                    "from": "testuserid11",
+                    "memo": "sell DBONDB to banktestacc1",
+                    "quantity": "5.00 DBONDB",
+                    "to": "hodldbondacc"
+                 });
                 
                 console.log(this.user, transaction);
                 const res = await this.user.signTransaction(transaction, transactionConfig);

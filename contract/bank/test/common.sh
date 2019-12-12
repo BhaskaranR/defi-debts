@@ -20,6 +20,8 @@ setvar() {
 # parameters: <variable name> <variable value>
 setperiodic() {
 	value=${2//,}
+	echo "[\"periodic\", \"$1\", $value]"
+	echo $ORACLE_ACC
 	cleos -u $API_URL push action $BANK_ACC setvar "[\"periodic\", \"$1\", $value]" -p $ORACLE_ACC@active
 }
 
@@ -67,7 +69,8 @@ function transfer {
 	to="$2"
 	qtty="$3"
 	memo="$4"
-	cleos -u $API_URL push action $BANK_ACC transfer "[\"$from\", \"$to\", \"$qtty\", \"$memo\"]" -p $from@active
+	echo "[\"$from\", \"$to\", \"$qtty\", \"$memo\"]"
+	# cleos -u $API_URL push action $BANK_ACC transfer "[\"$from\", \"$to\", \"$qtty\", \"$memo\"]" -p $from@active
 }
 
 function transfer_eos {

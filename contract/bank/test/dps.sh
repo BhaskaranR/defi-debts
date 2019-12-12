@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [[ -z "$ENV_SH" ]] ; then
-	source ./env.sh
-fi
+# if [[ -z "$ENV_SH" ]] ; then
+. ./env.sh
+# fi
 
-if [[ -z "$FUNCTIONS_SH" ]] ; then
-	source ./functions.sh
-fi
+# if [[ -z "$FUNCTIONS_SH" ]] ; then
+. ./functions.sh
+# fi
 
-if [[ -z "$COMMON_SH" ]] ; then
-	source ./common.sh
-fi
+# if [[ -z "$COMMON_SH" ]] ; then
+. ./common.sh
+# fi
 
 title "DPS listing and selling"
 

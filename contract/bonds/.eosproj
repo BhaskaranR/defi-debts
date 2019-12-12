@@ -1,0 +1,21 @@
+{
+  "main": "./src/dbonds.cpp",
+  "contract": "dbonds",
+  "include": "",
+  "resource": "",
+  "cdt": "cmd",
+  "output": "",
+  "scripts": {
+    "build": "eosio-cpp -abigen -I ./include  ./src/dbonds.cpp -o dbonds.wasm"
+  },
+  "deploy": {
+    "target": "both",
+    "mainnet": "",
+    "kylin": "",
+    "jungle": "",
+    "local": ""
+  },
+  "test": {
+    "npmClient": ""
+  }
+}

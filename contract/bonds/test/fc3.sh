@@ -45,15 +45,15 @@ function confirmfcdb_unauth {
 
 title "SELL-BUY TESTS"
 
-title "EMITENT SELLS"
-  erase "banktestacc1" "testuserid11"
-   init_test
-# must_fail "authdbond" authdbond_unauth
-# must_pass "authdbond" authdbond
-# must_fail "sell wrong tokens" transfer_to_sell $emitent $DBONDS "1.23 SOMETKN"
+# title "EMITENT SELLS"
+erase "banktestacc1" "testuserid11" 
+# init_test
+# # # must_fail "authdbond" authdbond_unauth
+#  must_pass "authdbond" authdbond
+# #  must_fail "sell wrong tokens" transfer_to_sell $emitent $DBONDS "1.23 SOMETKN"
 
-# title "SELLS"
-   must_pass "sell" transfer_to_sell $emitent $DBONDS "2.00 $bond_name"
+# # title "SELLS"
+#  must_pass "sell" transfer_to_sell $emitent $DBONDS "2.00 $bond_name"
 
 # # title "USER BUYS"
 # must_fail "buy wrong tokens" transfer_to_buy $emitent $DBONDS "1.23 SOMETKN"

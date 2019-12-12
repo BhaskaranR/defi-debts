@@ -32,7 +32,15 @@
         "iosfwd": "cpp",
         "__string": "cpp",
         "__locale": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "__node_handle": "cpp",
+        "__memory": "cpp",
+        "random": "cpp",
+        "__hash_table": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "__config": "cpp",
+        "fstream": "cpp"
     },
     "python.pythonPath": "/usr/local/bin/python3"
 }

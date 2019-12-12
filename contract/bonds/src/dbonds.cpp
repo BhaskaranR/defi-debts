@@ -357,9 +357,8 @@ ACTION dbonds::listprivord(dbond_id_class dbond_id, name seller, name buyer, ext
       l.price             = fcdb_info.current_price;
     });
 
-    eosio::print(buyer);
     // send notification to counterparty
-      //require_recipient(is_sell ? buyer : seller);
+      require_recipient(is_sell ? buyer : seller);
   }
   else {
     // if got here from second order request from holder need to fail
