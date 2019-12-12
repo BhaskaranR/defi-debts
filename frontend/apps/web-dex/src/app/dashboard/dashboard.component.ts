@@ -98,6 +98,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public onSelectionChanged(e){
     this.bondSelected = e.api.getSelectedRows()[0];
+    this.getBlotterData();
   }
 
   offerApi:any;
@@ -109,17 +110,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   offerData : any[];
 
+
   blotterColumnDefs = [
-    {headerName: 'Action',        cellRenderer: 'OfferDetailPopupComponent', width:80},
-    {headerName: 'Bond Id',       field: 'id',          width:120 },
-    {headerName: 'Current Price', field: 'currPrice',   width:120 },
-    {headerName: 'Initial Price', field: 'initPrice',   width:120 },
-    {headerName: 'Payoff Price',  field: 'payoffPrice', width:120 },
-    {headerName: 'Maturity Time', field: 'maturity',    width:120, valueFormatter:(params)=>{console.log(params.value);return moment(params.value).format('MM/DD/YYYY')}},
-    {headerName: 'Qty',           field: 'qty',         width:120},
+    {headerName: 'Buyer', field: 'buyer',   width:120 },
+    {headerName: 'Price', field: 'price.quantity',   width:120 },
+    {headerName: 'Payment Contract ', field: 'recieved_payment.contract',   width:150 },
+    {headerName: 'Received Payment',  field: 'recieved_payment.quantity', width:250 },
+    {headerName: 'Received Quantity', field: 'received_quantity',    width:350, valueFormatter:(params)=>{console.log(params.value);return moment(params.value).format('MM/DD/YYYY')}},
 ];
 
-  blotterData : any[] = [];
 
   modules = AllCommunityModules;
   frameworkComponents : {[key:string]:any} = {OfferDetailPopupComponent: OfferDetailPopupComponent}
@@ -171,6 +170,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.gridApi = params.api;
     }
 
+    ordergridApi:any;
+    onOrderGridReady(params){
+      this.ordergridApi = params.api;
+    }
+
+
     private async readData(){
       const data = await this.dashboarService.readDbonds();
 
@@ -190,28 +195,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
     bondSelected:any;
     async onBuy(){
       try{
-      const result = await this.dashboarService.buyBond(this.buyForm.value.amount);
+      const result = await this.dashboarService.transfer(this.buyForm.value.amount, this.bondSelected.id);
       }catch(e){
         this._snackBar.open('something went wrong');
         console.log(e);
       }
     }
 
-
+    blotterData = [];
     async getBlotterData(){
-      let timer;
       try{
         const data = await this.readBlotter();
         if (!!data && data.length > 0 ){
-          this.gridApi.setRowData(data);
+          this.blotterData =  data;
         }
-        console.log('blotter : ', this.blotterData);
-        timer = setTimeout(() =>{
-          this.getBlotterData();
-        }, 2000);
       }
       catch(e){
-        clearTimeout(timer);
         this._snackBar.openFromComponent(ErrorComponent, {
           duration: 2000,
         });
@@ -219,7 +218,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private async readBlotter(){
-      return await this.dashboarService.getOrders();
+      return await this.dashboarService.getOrders(this.bondSelected.id);
     }
 
     private generateChartData(data){

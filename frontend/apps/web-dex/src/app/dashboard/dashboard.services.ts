@@ -15,7 +15,7 @@ export class DashboarService {
        this.reader = Eos({httpEndpoint: `${environment.RPC_PROTOCOL}://${environment.RPC_HOST}:${environment.RPC_PORT}`, chainId:environment.CHAIN_ID});
     }
 
-    async buyBond(price){
+    async transfer(qty, bondid){
         return new Promise(async (resolve, reject) => {
             try {
                 if (!this.user || !this.accountName) {
@@ -26,8 +26,8 @@ export class DashboarService {
                 const transaction = generateTransaction(this.accountName, "transfer", {
                     from: this.accountName,
                     to: 'hodldbondacc',
-                    quantity:price.toFixed(2) + ' DBONDA',
-                    memo:"sell DBONDA to banktestacc1",
+                    quantity:qty.toFixed(2) + ' ' + bondid,
+                    memo:`sell ${bondid} to banktestacc1`,
                 });
                 
                 console.log(this.user, transaction);
@@ -60,7 +60,7 @@ export class DashboarService {
     }
 
 
-    async getOrders(){
+    async getOrders(bondid){
         const users = this.ualService.users$.value;
          if (users == null || users.length <=0) {
              return;
@@ -72,7 +72,7 @@ export class DashboarService {
             table: 'fcdborders',
             limit: 100,
             rowsOnly: true,
-            scope:accountName,
+            scope:bondid,
             model: DBORDER,
             index_position: null,
             index: null,

@@ -10,12 +10,10 @@ export class DBond {
 }
 
 export class DBORDER {
-    dbond:string;
-   initial_time:string;
-   initial_price:string;
-   current_price:string;
-   fc_state:string;
-   confirmed_by_counterparty:string;
+   buyer: object;
+   price: string;
+   recieved_payment: string
+   received_quantity:string;
     static fromJson(json){ return Object.assign(DBORDER.placeholder(), json); }
-    static placeholder(){ return new DBond(); }
+    static placeholder(){ return new DBORDER(); }
 }
