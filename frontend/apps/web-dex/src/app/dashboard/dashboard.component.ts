@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { UalService } from 'ual-ngx-material-renderer';
 import { Chart} from 'angular-highcharts';
 import {AllCommunityModules} from '@ag-grid-community/all-modules';
@@ -8,6 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {theme} from './highchart.theme';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import * as moment from 'moment';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 interface IOffer {
   id:string;
@@ -30,6 +31,32 @@ interface IChart {
 })
 export class ErrorComponent {}
 
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  template: `<table>
+  <tr>
+    <th style="width:30%; text-align:left">Current Price</th>
+    <th style="width:30%; text-align:left">Maturity Date</th>
+    <th style="width:30%; text-align:left">Qty</th>
+  </tr>
+  <tr>
+    <td>{{data.value.currPrice}}</td>
+    <td>{{data.value.maturityTime}}</td>
+    <td>{{data.value.quantity}}</td>
+  </tr>
+</table>`,
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
 
 
 @Component({
@@ -54,12 +81,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   chart = new Chart(Object.assign({},this.chartOptions, theme));
 
   offerColumnDefs = [
-      {headerName: 'Action',        field: null,            width:80,   cellRenderer: 'OfferDetailPopupComponent', },
+      {headerName: 'Action',        field: null,            width:80,   cellRendererFramework: OfferDetailPopupComponent, cellRendererParams:{click:this.openDetails.bind(this)} },
       {headerName: 'Bond Id',       field: 'id',            width:120 },
       {headerName: 'Current Price', field: 'currPrice',     width:120 },
       {headerName: 'Initial Price', field: 'initPrice',     width:120 },
       {headerName: 'Payoff Price',  field: 'payoffPrice',   width:120 },
-      {headerName: 'Maturity Time', field: 'maturityTime',  width:160 ,  filter: "agDateColumnFilter",},
+      {headerName: 'Maturity Time', field: 'maturityTime',  width:160 ,  valueFormatter:(params)=> moment(params.value).format('MM/DD/YYYY')},
       {headerName: 'Qty to Issue',  field: 'quantity',      width:120 },
   ];
 
@@ -83,13 +110,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   offerData : any[];
 
   blotterColumnDefs = [
-    {headerName: 'Action', cellRenderer: 'OfferDetailPopupComponent', width:80},
-    {headerName: 'Bond Id',  field: 'id',  width:120 },
-    {headerName: 'Current Price', field: 'currPrice', width:120 },
-    {headerName: 'Initial Price', field: 'initPrice', width:120 },
-    {headerName: 'Payoff Price', field: 'payoffPrice', width:120 },
-    {headerName: 'Maturity Time', field:'maturity',width:120, filter: "agDateColumnFilter",},
-    {headerName: 'Qty', field:'qty',width:120},
+    {headerName: 'Action',        cellRenderer: 'OfferDetailPopupComponent', width:80},
+    {headerName: 'Bond Id',       field: 'id',          width:120 },
+    {headerName: 'Current Price', field: 'currPrice',   width:120 },
+    {headerName: 'Initial Price', field: 'initPrice',   width:120 },
+    {headerName: 'Payoff Price',  field: 'payoffPrice', width:120 },
+    {headerName: 'Maturity Time', field: 'maturity',    width:120, valueFormatter:(params)=>{console.log(params.value);return moment(params.value).format('MM/DD/YYYY')}},
+    {headerName: 'Qty',           field: 'qty',         width:120},
 ];
 
   blotterData : any[] = [];
@@ -110,6 +137,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private ualService: UalService,
     private dashboarService:DashboarService,
     private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private fb: FormBuilder) {}
 
     ngOnInit() {
@@ -227,5 +255,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
         
       });
 
+    }
+
+    openDetails(val){
+      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+        width: '800px',
+        data: {value:val}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     }
 }

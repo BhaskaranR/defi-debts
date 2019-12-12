@@ -13,6 +13,6 @@ export class OfferDetailPopupComponent {
     }
 
     onClick(){
-        alert('click!');
+        this.params.click(this.params.data);
     }
 }

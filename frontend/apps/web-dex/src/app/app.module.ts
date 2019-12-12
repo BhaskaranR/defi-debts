@@ -16,6 +16,7 @@ import {
   MatMenuModule,
   MatCardModule
 } from "@angular/material";
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { HttpClientModule } from "@angular/common/http";
@@ -31,7 +32,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthGuard } from './auth.guard';
 import { environment } from '@dex-env';
 import { SvgViewerModule } from './svg-viewer/svg-viewer';
-import { DashboardComponent, ErrorComponent } from "./dashboard/dashboard.component";
+import { DashboardComponent, ErrorComponent, DialogOverviewExampleDialog } from "./dashboard/dashboard.component";
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DashboarService } from "./dashboard/dashboard.services";
 import { OfferDetailPopupComponent } from "./dashboard/offerDetailPopup.component";
@@ -71,13 +72,14 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
 
 
 @NgModule({
-  entryComponents:[ErrorComponent],
+  entryComponents:[ErrorComponent, DialogOverviewExampleDialog],
   declarations: [
     AppComponent,
     ErrorComponent, 
     NavBarComponent, 
     DashboardComponent, 
-    OfferDetailPopupComponent
+    OfferDetailPopupComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,
@@ -105,6 +107,7 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' });
     MatMenuModule,
     MatCardModule,
     MatSnackBarModule,
+    MatDialogModule,
     ChartModule,
     MatInputModule,
     ReactiveFormsModule,
