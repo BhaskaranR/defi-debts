@@ -189,9 +189,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     bondSelected:any;
     async onBuy(){
-      
+      try{
       const result = await this.dashboarService.buyBond(this.buyForm.value.amount);
-      console.log(result);
+      }catch(e){
+        this._snackBar.open('something went wrong');
+        console.log(e);
+      }
     }
 
 
@@ -260,6 +263,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     openDetails(val){
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '800px',
+        height:'580px',
         data: {value:val}
       });
   
