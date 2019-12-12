@@ -119,7 +119,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     {headerName: 'Received Quantity', field: 'received_quantity',    width:350, valueFormatter:(params)=>{console.log(params.value);return moment(params.value).format('MM/DD/YYYY')}},
 ];
 
-
   modules = AllCommunityModules;
   frameworkComponents : {[key:string]:any} = {OfferDetailPopupComponent: OfferDetailPopupComponent}
 

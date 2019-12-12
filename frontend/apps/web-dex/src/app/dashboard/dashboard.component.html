@@ -3,8 +3,11 @@
         <div fxFlex.gt-sm="100" fxFlex="100" [ngStyle]="{'padding.px':15}">
             <mat-card>
                 <h3>Offers</h3>
-                <ag-grid-angular style="width: 100%; height:150px;" class="ag-theme-balham-dark" [rowSelection]="'single'" (selectionChanged)="onSelectionChanged($event)" (onGridReady)="onOfferGridReady" [defaultColDef]="defaultColDef" [frameworkComponents]="frameworkComponents"
-                    [rowData]="offerData" [columnDefs]="offerColumnDefs" [modules]="modules">
+                <ag-grid-angular style="width: 100%; height:150px;" class="ag-theme-balham-dark"
+                    [rowSelection]="'single'" (selectionChanged)="onSelectionChanged($event)"
+                    (onGridReady)="onOfferGridReady" [defaultColDef]="defaultColDef"
+                    [frameworkComponents]="frameworkComponents" [rowData]="offerData" [columnDefs]="offerColumnDefs"
+                    [modules]="modules">
                 </ag-grid-angular>
             </mat-card>
         </div>
@@ -25,16 +28,30 @@
                         <mat-card-title>Transfer {{bondSelected ? bondSelected.id : 'bond'}}</mat-card-title>
                     </mat-card-header>
 
-
                     <mat-card-content>
-                        <mat-form-field>
-                            <input matInput placeholder="Qty" type="number" class="" formControlName="amount">
-                            <span matSuffix>.00</span>
-                        </mat-form-field>
+                        <table  cellspacing="0">
+                            <tr>
+                                <td>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="To" value="hodldbondacc" disabled>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Qty" type="number" style="width:120px;"
+                                            formControlName="amount" />
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            </table>
                     </mat-card-content>
 
                     <mat-card-actions>
-                        <button mat-flat-button color="primary" type="submit" [disabled]="!buyForm.valid || !bondSelected">Transfer</button>
+                        <button mat-flat-button color="primary" type="submit"
+                            [disabled]="!buyForm.valid || !bondSelected">Transfer</button>
                     </mat-card-actions>
                 </form>
             </mat-card>
@@ -49,7 +66,8 @@
         <mat-card-header>
             <mat-card-title>Order Info</mat-card-title>
         </mat-card-header>
-        <ag-grid-angular style="width: 100%; height: 100px;" class="ag-theme-balham-dark"  [rowData]="blotterData" [columnDefs]="blotterColumnDefs" [frameworkComponents]="frameworkComponents" [modules]="modules">
+        <ag-grid-angular style="width: 100%; height: 100px;" class="ag-theme-balham-dark" [rowData]="blotterData"
+            [columnDefs]="blotterColumnDefs" [frameworkComponents]="frameworkComponents" [modules]="modules">
         </ag-grid-angular>
     </mat-card>
 </div>
