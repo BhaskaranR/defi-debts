@@ -1,5 +1,3 @@
-the contract for this repo is forked from [dBonds](https://github.com/thedeposbank/dbonds) .
-
 
 This repository enables developers to instantiate a browser based IDE and runs the required EOSIO blockchain components (nodeos, keosd, cleos) in a personal cloud instance. All custom code created by the developer is securely managed on the developer's personal GitHub account. Zero installation is required on the user's machine. User's can simply point their browser to the provided URL below and begin compiling the provided example smart contract (C++) and the associated front-end decentralized application (EOSJS), deploy the application on the blockchain, and experience the application in under a few minutes.  
 
