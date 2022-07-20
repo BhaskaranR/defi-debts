@@ -88,7 +88,7 @@
     "rimraf": "^2.6.3",
     "rxjs": "~6.5.3",
     "subscriptions-transport-ws": "^0.9.15",
-    "terser": "^3.14.1",
+    "terser": "^4.8.1",
     "ual-eosio-reference-authenticator": "^0.1.1",
     "ual-ngx-material-renderer": "^1.0.6",
     "ual-plainjs-renderer": "^0.1.0",
